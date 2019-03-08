@@ -6,12 +6,15 @@ import System.IO.Error
 
 import Control.Exception
 
+import Data.List as L
+
 import DownloadDays (fetchDays)
 
 import Day1
 import Day2
 import Day3
 import Day4
+import Day5
 
 daysDir = "/Users/kirill/competitive/advent15/days/"
 
@@ -29,6 +32,7 @@ solvers =
   , day2
   , day3
   , day4
+  , day5
   ]
 
 days :: IO [String]
@@ -38,8 +42,4 @@ days = catchJust
        (\_ -> fetchDays . length $ solvers)
 
 main :: IO ()
-main = do
-  days <- days
-  print $
-    Prelude.zipWith ($) solvers days
-
+main = days >>= print . L.last . Prelude.zipWith ($) solvers
