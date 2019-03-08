@@ -28,6 +28,7 @@ dependencies:
 - bytestring
 - aeson
 - data-default-class
+- pureMD5
 
 library:
   source-dirs: src

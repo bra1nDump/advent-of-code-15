@@ -27,10 +27,12 @@ fetchDay day = runReq def $ do
 
 days = "/Users/kirill/competitive/advent15/days"
 
-fetchDays :: Int -> IO ()
+fetchDays :: Int -> IO [String]
 fetchDays dayCount =
-  mapM_
-  (\day ->
-     fetchDay day
-     >>= writeFile (days ++ "/" ++ (show day)))
+  mapM
+  (\day -> do
+     input <- fetchDay day
+     writeFile (days ++ "/" ++ (show day)) input
+     return input
+  )
   [1..dayCount]
