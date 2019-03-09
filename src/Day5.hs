@@ -1,3 +1,5 @@
+{-# LANGUAGE UnicodeSyntax, LambdaCase, BlockArguments #-}
+
 module Day5 (day5) where
 
 import Data.List as L
@@ -13,7 +15,11 @@ day5 input =
 p predicates =
   show . L.length . L.filter isNice . lines
   where isNice str = L.and (pure str <**> predicates)
-                 
+
+sameCountPredicate p =
+  L.group >>> L.map L.length
+  >>> L.filter p
+
 p1 =
   [ has3In "aeiou"
   , repeatedTwice
@@ -22,15 +28,39 @@ p1 =
   where
     has3In set = (>= 3) . L.length
                  . L.filter (`L.elem` set)
-    repeatedTwice = L.group >>> L.map L.length
-                    >>> L.filter (>= 2)
+    repeatedTwice = sameCountPredicate (>= 2)
                     >>> not . L.null
     doesNotContain set str = allFalse . L.map (flip L.isInfixOf $ str) $ set
 
 p2 =
-  [ --twoNonOverlapingPairs
-  --, hasXaxXbxPattern
+  [ hasRepeatingPair
+  , hasXaxPattern
   ]
+  where
+    hasRepeatingPair xs = fst .
+                      L.foldr
+                      (const
+                        \case
+                          (True, _) -> (True, [])
+                          (False, x1:x2:rest) ->
+                            (L.isInfixOf [x1,x2] rest, x2:rest)
+                          _ -> (False, [])
+                      )
+                      (False, xs)
+                      $ xs
+    hasXaxPattern xs = fst .
+                          L.foldr
+                          (const
+                            \case
+                             (True, _) -> (True, [])
+                             (False, x1:a:x2:rest) ->
+                               (x1 == x2, a:x2:rest)
+                             _ -> (False, [])
+                          )
+                          (False, xs)
+                          $ xs
+      
+      
 
 
 
