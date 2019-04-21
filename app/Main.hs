@@ -15,6 +15,7 @@ import Day2
 import Day3
 import Day4
 import Day5
+import Day6
 
 daysDir = "/Users/kirill/competitive/advent15/days/"
 
@@ -33,6 +34,7 @@ solvers =
   , day3
   , day4
   , day5
+  , day6
   ]
 
 days :: IO [String]

@@ -29,6 +29,8 @@ dependencies:
 - aeson
 - data-default-class
 - pureMD5
+- transformers
+- array
 
 library:
   source-dirs: src
