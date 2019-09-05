@@ -15,7 +15,7 @@ fetchDay day = runReq def $ do
   let cookieHeader =
         (header
          "cookie"
-         "_ga=GA1.2.625403450.1551846454; _gid=GA1.2.351519271.1551846454; session=53616c7465645f5f790947c4b3eb1df8e14ec71583db8fa93d5271d853b0bfd86f99bad89a81feb33b47b17b0d3a8d86")
+         "_ga=GA1.2.705727629.1567566706; _gid=GA1.2.507807161.1567566706; session=53616c7465645f5f33d58869d1e8431d6edb1b8b5e4670808f6554d02bb7a9bb2e44fb60f87557232fe48498c30d4f21")
   let (url, _) = fromJust . parseUrlHttps . B.pack $
                  ("https://adventofcode.com/2015/day/" ++ (show day) ++ "/input")
   res <- req GET
@@ -25,7 +25,7 @@ fetchDay day = runReq def $ do
     cookieHeader
   return . B.unpack . responseBody $ res
 
-days = "/Users/kirill/competitive/advent15/days"
+days = "C:/Users/kirill/Desktop/projects/advent-of-code-15/days"
 
 fetchDays :: Int -> IO [String]
 fetchDays dayCount =

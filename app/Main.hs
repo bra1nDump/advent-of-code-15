@@ -16,8 +16,9 @@ import Day3
 import Day4
 import Day5
 import Day6
+import Day7
 
-daysDir = "/Users/kirill/competitive/advent15/days/"
+daysDir = "C:/Users/kirill/Desktop/projects/advent-of-code-15/days/"
 
 readDays :: Int -> IO [String]
 readDays dayCount =
@@ -35,6 +36,7 @@ solvers =
   , day4
   , day5
   , day6
+  , day7
   ]
 
 days :: IO [String]
