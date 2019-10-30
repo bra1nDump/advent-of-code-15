@@ -1,6 +1,9 @@
-{-# LANGUAGE ViewPatterns, LambdaCase #-}
+{-# LANGUAGE 
+    ViewPatterns
+  , LambdaCase 
+#-}
 
-module Day6 (day6, parseInstruction) where
+module Day6 where
 
 import Data.Monoid -- Sum monoid
 import Data.List as L
@@ -47,7 +50,6 @@ parseF2 = do
     parse (L.stripPrefix "toggle " -> Just rest) = ((+) 2, rest)
     parse _ = undefined
 
-
 parseRect :: State String (Point, Point)
 parseRect = do
   words' <- fmap words $ get
@@ -64,6 +66,7 @@ instructionFolder initValue =
            grid A.// [ (p, f (grid A.! p)) | x <- [x1..x2], y <- [y1..y2], let p = (x, y) ])
   (initGrid initValue)
 
+p1 :: String -> String
 p1 input =
   show . getSum
   . foldMap (\case
@@ -72,6 +75,7 @@ p1 input =
   . instructionFolder False
   $ map (evalState parseInstruction) . lines $ input
   
+p2 :: String -> String
 p2 input =
   show . foldl (+) (0 :: Integer)
   . instructionFolder (0 :: Integer)

@@ -1,3 +1,6 @@
 .stack-work/
 advent15.cabal
-*~
+
+days
+
+.vscode/

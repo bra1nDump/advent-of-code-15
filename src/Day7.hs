@@ -89,5 +89,3 @@ p2 input =
     (expressionNew, _) = resolve newInstructions Map.empty (Wire "a")
   in
   show expressionNew
-
-day7 input = (p1 input, p2 input)

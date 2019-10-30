@@ -31,6 +31,8 @@ dependencies:
 - pureMD5
 - transformers
 - array
+- clock # benchmark
+- interpolate # display statistic
 
 library:
   source-dirs: src

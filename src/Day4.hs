@@ -1,28 +1,29 @@
-{- LANGUAGE OverloadedStrings -}
+{-# LANGUAGE OverloadedStrings #-}
 
-module Day4 (day4) where
+module Day4 where
 
+import Common
 import Control.Arrow
 
-import Data.Digest.Pure.MD5 (md5)
-import Data.List as L
-import Data.ByteString.Lazy.Char8 as BS
+import Data.Digest.Pure.MD5 (md5, md5DigestBytes)
+import Data.List as List
+import qualified Data.ByteString.Lazy.Char8 as BS
 
-day4 :: String -> (String, String)
-day4 = L.filter ('\n' /=) >>> solve
+hash :: BS.ByteString -> BS.ByteString
+hash = BS.fromStrict . md5DigestBytes . md5
 
-solve input =
-  (p1, p2)
-  where
-    notLucky1 = ("00000" /=) . L.take 5
-    notLucky2 = ("000000" /=) . L.take 6
-    mine notLucky =
-      show . L.head
-      . L.dropWhile
-      (notLucky . show
-       . md5
-       . BS.pack . (input ++) . show
-      )
-      $ [1..]
-    p1 = mine notLucky1
-    p2 = mine notLucky2
+mine :: String -> (String -> Bool) -> String
+mine prefix notLucky =
+  show . head
+  . dropWhile
+  (notLucky . show
+    . md5
+    . BS.pack . (prefix ++) . show
+  )
+  $ [1..]
+
+p1 :: String -> String 
+p1 input = mine input (not . List.isPrefixOf "00000")
+
+p2 :: String -> String
+p2 input = mine input (not . List.isPrefixOf "000000")

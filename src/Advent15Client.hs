@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module DownloadDays (fetchDays) where
+module Advent15Client where
 
 import Control.Monad.IO.Class
 import Data.Aeson
@@ -10,8 +10,8 @@ import Data.Text
 import Network.HTTP.Req
 import qualified Data.ByteString.Char8 as B
 
-fetchDay :: Int -> IO String
-fetchDay day = runReq def $ do
+getDay :: Int -> IO String
+getDay day = runReq def $ do
   let cookieHeader =
         (header
          "cookie"
@@ -23,16 +23,4 @@ fetchDay day = runReq def $ do
     NoReqBody
     bsResponse
     cookieHeader
-  return . B.unpack . responseBody $ res
-
-days = "C:/Users/kirill/Desktop/projects/advent-of-code-15/days"
-
-fetchDays :: Int -> IO [String]
-fetchDays dayCount =
-  mapM
-  (\day -> do
-     input <- fetchDay day
-     writeFile (days ++ "/" ++ (show day)) input
-     return input
-  )
-  [1..dayCount]
+  return . B.unpack . B.init . responseBody $ res

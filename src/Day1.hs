@@ -1,22 +1,19 @@
-module Day1 (day1) where
+module Day1 where
 
-import Data.List
+import Common
+import qualified Data.List as List
 
-day1 :: String -> (String, String)
-day1 input =
-  (p1, p2)
-  where
-    count c = length . filter (c ==) $ input
-    p1 = show $ (count '(') - (count ')')
-    p2 =
-      let folder (Nothing, a) (x, i) =
-            let a' =
-                  if x == '(' then a + 1
-                  else a - 1
-            in (if a' == -1 then Just i else Nothing, a')
-          folder x@(Just i, a) _ = x
-      in
-        show $
-        foldl folder
-        (Nothing, 0)
-        (zip input [1..])
+p1 :: String -> String
+p1 input = show $ (count '(') - (count ')')
+  where count c = length . filter (c ==) $ input
+      
+p2 :: String -> String
+p2 directions = show . List.elemIndex (-1) $ floorsVisited
+  where 
+    floorsVisited = 
+      scanl 
+        (\floor direction -> 
+          if direction == '(' 
+          then floor - 1 else floor + 1
+        )
+        0 directions
